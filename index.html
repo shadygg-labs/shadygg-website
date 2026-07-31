@@ -55,14 +55,8 @@
     .brand-mark {
       width:38px;
       height:38px;
-      display:grid;
-      place-items:center;
-      border:1px solid rgba(255,42,163,.55);
-      background:linear-gradient(145deg,rgba(255,42,163,.18),rgba(65,232,255,.06)),#100e1c;
-      color:var(--ink);
-      font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
-      font-size:15px;
-      font-weight:700;
+      display:block;
+      object-fit:contain;
     }
 
     .brand-copy strong { display:block; font-size:15px; }
@@ -91,6 +85,31 @@
       text-transform:uppercase;
     }
 
+    .hero-badge {
+      display:inline-flex;
+      align-items:center;
+      min-height:28px;
+      margin-bottom:20px;
+      padding:0 10px;
+      border:1px solid rgba(65,232,255,.24);
+      background:rgba(16,14,28,.72);
+      color:#b8dce3;
+      font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+      font-size:10px;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+    }
+
+    .hero-badge::before {
+      width:6px;
+      height:6px;
+      margin-right:8px;
+      border-radius:50%;
+      background:var(--cyan);
+      box-shadow:0 0 10px rgba(65,232,255,.7);
+      content:"";
+    }
+
     h1 {
       max-width:960px;
       margin:0;
@@ -103,6 +122,8 @@
       letter-spacing:-.055em;
     }
 
+    h1 .headline-emphasis { color:#fff; }
+
     .hero-copy {
       max-width:760px;
       margin:30px 0 0;
@@ -112,6 +133,15 @@
     }
 
     .hero-copy strong { color:var(--ink); font-weight:600; }
+
+    .hero-note {
+      margin:18px 0 0;
+      color:var(--muted);
+      font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+      font-size:12px;
+      letter-spacing:.02em;
+      line-height:1.7;
+    }
 
     .hero-actions {
       display:flex;
@@ -237,7 +267,7 @@
 <body>
   <header class="site-shell site-header">
     <a class="brand" href="#">
-      <span class="brand-mark">SG</span>
+      <img class="brand-mark" src="assets/logo/shadygg-logo.svg" alt="ShadyGG logo">
       <span class="brand-copy">
         <strong>ShadyGG</strong>
         <span>Story-driven video production</span>
@@ -253,18 +283,18 @@
 
   <main>
     <section class="site-shell hero">
-      <p class="eyebrow">AI story-driven video production</p>
-      <h1>Turn a 2–4 hour VOD into a story and a draft cut in no time.</h1>
+      <p class="hero-badge">Experimental mode · Active Development</p>
+      <h1>Turn a 2–6 hour stream<br><span class="headline-emphasis">into one great story.</span></h1>
 
       <p class="hero-copy">
-        ShadyGG discovers the strongest story in your gameplay, builds a clear narrative,
-        creates an editor-friendly Director Plan, and prepares a Premiere-ready timeline.
-        <strong>You create the gameplay. ShadyGG finds the story.</strong>
+        ShadyGG analyzes your VOD, discovers the strongest story, and creates a viewer-first draft cut with an AI Director in just a few minutes.
       </p>
 
+      <p class="hero-note">No editing skills required.<br>No timeline work.<br>Just your VOD.</p>
+
       <div class="hero-actions">
-        <a class="button button-primary" href="#creator-tests">See creator tests</a>
-        <a class="button button-secondary" href="#how-it-works">How it works</a>
+        <a class="button button-primary" href="#creator-tests">Apply some ShadyGG magic to your latest stream</a>
+        <a class="button button-secondary" href="#how-it-works">See how it works</a>
       </div>
 
       <div class="metric-grid" aria-label="Product highlights">
