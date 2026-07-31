@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="ShadyGG turns 2–4 hour gaming VODs into story-driven draft cuts and editor-ready plans in no time.">
+  <title>ShadyGG — From Gameplay to Story</title>
+  <style>
+    :root {
+      --ink:#f4f4ef;
+      --muted:#999a95;
+      --surface:#151714;
+      --surface-2:#1b1e1a;
+      --line:#29263d;
+      --pink:#ff2aa3;
+      --cyan:#41e8ff;
+      --blue:#7777ff;
+      --deep:#0b0c0a;
+    }
+
+    * { box-sizing:border-box; }
+    html { background:var(--deep); scroll-behavior:smooth; }
+
+    body {
+      margin:0;
+      min-width:320px;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 82% -8%,rgba(52,188,255,.18),transparent 34rem),
+        radial-gradient(circle at 8% 26%,rgba(255,42,163,.12),transparent 30rem),
+        linear-gradient(145deg,#090811 0%,#0d0b18 48%,#080b16 100%);
+      font-family:Arial,Helvetica,sans-serif;
+      line-height:1.55;
+    }
+
+    a { color:inherit; }
+    .site-shell { width:min(1180px,calc(100% - 40px)); margin:0 auto; }
+
+    .site-header {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+      padding:26px 0;
+      border-bottom:1px solid var(--line);
+    }
+
+    .brand {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+    }
+
+    .brand-mark {
+      width:38px;
+      height:38px;
+      display:grid;
+      place-items:center;
+      border:1px solid rgba(255,42,163,.55);
+      background:linear-gradient(145deg,rgba(255,42,163,.18),rgba(65,232,255,.06)),#100e1c;
+      color:var(--ink);
+      font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+      font-size:15px;
+      font-weight:700;
+    }
+
+    .brand-copy strong { display:block; font-size:15px; }
+    .brand-copy span {
+      display:block;
+      margin-top:2px;
+      color:var(--muted);
+      font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+      font-size:9px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+    }
+
+    nav { display:flex; flex-wrap:wrap; gap:22px; }
+    nav a { color:#c2c5bd; text-decoration:none; font-size:14px; }
+    nav a:hover, nav a:focus-visible { color:var(--cyan); }
+
+    .hero { padding:104px 0 96px; }
+
+    .eyebrow {
+      margin:0 0 18px;
+      color:var(--cyan);
+      font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+      font-size:11px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+    }
+
+    h1 {
+      max-width:960px;
+      margin:0;
+      color:transparent;
+      background:linear-gradient(100deg,#fff 15%,#f5d8ee 48%,#9eefff 85%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      font-size:clamp(48px,8vw,92px);
+      line-height:.98;
+      letter-spacing:-.055em;
+    }
+
+    .hero-copy {
+      max-width:760px;
+      margin:30px 0 0;
+      color:#c2c5bd;
+      font-size:clamp(18px,2vw,22px);
+      line-height:1.65;
+    }
+
+    .hero-copy strong { color:var(--ink); font-weight:600; }
+
+    .hero-actions {
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      margin-top:36px;
+    }
+
+    .button {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:48px;
+      padding:0 22px;
+      border:1px solid transparent;
+      text-decoration:none;
+      font-weight:700;
+      font-size:14px;
+    }
+
+    .button-primary { background:linear-gradient(90deg,var(--pink),var(--blue)); color:#fff; }
+    .button-secondary { border-color:#34304d; background:#100e1c; color:#d1d3cc; }
+
+    .metric-grid {
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:14px;
+      margin-top:66px;
+    }
+
+    .metric-card, .step {
+      padding:22px;
+      border:1px solid var(--line);
+      background:linear-gradient(145deg,rgba(26,22,39,.96),rgba(12,14,28,.98));
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+    }
+
+    .metric-card strong {
+      display:block;
+      color:var(--ink);
+      font-size:26px;
+      letter-spacing:-.03em;
+    }
+
+    .metric-card span {
+      display:block;
+      margin-top:6px;
+      color:var(--muted);
+      font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+      font-size:10px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .section { padding:28px 0 82px; }
+    .section-heading { max-width:760px; margin-bottom:30px; }
+
+    .section-heading h2, .closing h2 {
+      margin:0;
+      font-size:clamp(30px,4vw,48px);
+      letter-spacing:-.04em;
+    }
+
+    .section-heading p, .closing p {
+      margin:12px 0 0;
+      color:#c2c5bd;
+      font-size:18px;
+    }
+
+    .steps {
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .step { min-height:220px; }
+    .step-number {
+      color:var(--cyan);
+      font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+      font-size:10px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+
+    .step h3 { margin:34px 0 10px; color:var(--ink); font-size:20px; }
+    .step p { margin:0; color:#b9bdb6; }
+
+    .closing {
+      margin-bottom:68px;
+      padding:34px;
+      border:1px solid rgba(65,232,255,.28);
+      background:
+        radial-gradient(circle at 84% 20%,rgba(65,232,255,.10),transparent 19rem),
+        radial-gradient(circle at 8% 120%,rgba(255,42,163,.10),transparent 18rem),
+        #100e1c;
+    }
+
+    footer {
+      padding:24px 0 38px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+      font-size:10px;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+    }
+
+    @media (max-width:900px) {
+      .metric-grid, .steps { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .site-header { align-items:flex-start; flex-direction:column; }
+    }
+
+    @media (max-width:620px) {
+      .site-shell { width:min(100% - 24px,1180px); }
+      .hero { padding:76px 0 72px; }
+      .metric-grid, .steps { grid-template-columns:1fr; }
+      .hero-actions { flex-direction:column; }
+      .button { width:100%; }
+      .closing { padding:24px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-shell site-header">
+    <a class="brand" href="#">
+      <span class="brand-mark">SG</span>
+      <span class="brand-copy">
+        <strong>ShadyGG</strong>
+        <span>Story-driven video production</span>
+      </span>
+    </a>
+
+    <nav aria-label="Primary navigation">
+      <a href="#how-it-works">How it works</a>
+      <a href="#creator-tests">Creator tests</a>
+      <a href="#updates">Updates</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="site-shell hero">
+      <p class="eyebrow">AI story-driven video production</p>
+      <h1>Turn a 2–4 hour VOD into a story and a draft cut in no time.</h1>
+
+      <p class="hero-copy">
+        ShadyGG discovers the strongest story in your gameplay, builds a clear narrative,
+        creates an editor-friendly Director Plan, and prepares a Premiere-ready timeline.
+        <strong>You create the gameplay. ShadyGG finds the story.</strong>
+      </p>
+
+      <div class="hero-actions">
+        <a class="button button-primary" href="#creator-tests">See creator tests</a>
+        <a class="button button-secondary" href="#how-it-works">How it works</a>
+      </div>
+
+      <div class="metric-grid" aria-label="Product highlights">
+        <div class="metric-card"><strong>2–4h</strong><span>Typical input VOD</span></div>
+        <div class="metric-card"><strong>1 Story</strong><span>Selected narrative</span></div>
+        <div class="metric-card"><strong>Director Plan</strong><span>Editor-ready guidance</span></div>
+        <div class="metric-card"><strong>Premiere XML</strong><span>Draft timeline export</span></div>
+      </div>
+    </section>
+
+    <section class="site-shell section" id="how-it-works">
+      <div class="section-heading">
+        <p class="eyebrow">How it works</p>
+        <h2>From raw gameplay to an editor-ready first cut.</h2>
+        <p>ShadyGG focuses on the hardest part of editing long gaming content: finding the story and turning it into a useful production plan.</p>
+      </div>
+
+      <div class="steps">
+        <article class="step">
+          <span class="step-number">01 · Analysis</span>
+          <h3>Understand the session</h3>
+          <p>The system processes the VOD, transcript, speakers, and available context.</p>
+        </article>
+
+        <article class="step">
+          <span class="step-number">02 · Story ideas</span>
+          <h3>Find the strongest direction</h3>
+          <p>Multiple story candidates are discovered and prepared for human review.</p>
+        </article>
+
+        <article class="step">
+          <span class="step-number">03 · Blueprint</span>
+          <h3>Build one clear story</h3>
+          <p>The approved ideas become one canonical story with a hook, goal, conflict, and payoff.</p>
+        </article>
+
+        <article class="step">
+          <span class="step-number">04 · Director</span>
+          <h3>Create the draft edit</h3>
+          <p>A structured edit plan and Premiere-compatible timeline prepare the project for polishing.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="site-shell section" id="creator-tests">
+      <div class="closing">
+        <p class="eyebrow">Experimental creator tests</p>
+        <h2>Built with real VODs, real edits, and honest feedback.</h2>
+        <p>ShadyGG is currently in active development. Selected creator experiments are being completed manually to validate the workflow, improve the Director, and measure how much editing time the system can save.</p>
+      </div>
+    </section>
+
+    <section class="site-shell section" id="updates">
+      <div class="section-heading">
+        <p class="eyebrow">Project status</p>
+        <h2>Started July 21, 2026.</h2>
+        <p>The project moved from idea to a working end-to-end pipeline and its first external creator test in 11 days. Development updates and creator-test notes will be published here as the product evolves.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-shell">ShadyGG · Experimental · Story-driven video production for gaming creators</footer>
+</body>
+</html>
