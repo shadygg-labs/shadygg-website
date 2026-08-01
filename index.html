@@ -37,7 +37,8 @@
     .site-shell { width:min(1180px,calc(100% - 40px)); margin:0 auto; }
     .site-header {
       display:flex; align-items:center; justify-content:space-between; gap:24px;
-      padding:22px 0; border-bottom:1px solid var(--line);
+      margin-top:22px; padding:18px 26px; border:1px solid rgba(79,73,115,.38);
+      border-radius:12px; background:rgba(5,6,14,.7); backdrop-filter:blur(12px);
     }
     .brand { display:flex; align-items:center; gap:12px; text-decoration:none; }
     .brand-mark { width:38px; height:38px; display:block; object-fit:contain; }
@@ -47,7 +48,7 @@
       font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
       font-size:9px; letter-spacing:.14em; text-transform:uppercase;
     }
-    nav { display:flex; flex-wrap:wrap; gap:26px; margin-left:auto; }
+    nav { display:flex; flex-wrap:wrap; gap:42px; margin-left:auto; }
     nav a { color:#c2c5bd; text-decoration:none; font-size:14px; }
     nav a:hover, nav a:focus-visible { color:var(--cyan); }
 
@@ -60,8 +61,8 @@
     .button-primary { background:linear-gradient(90deg,var(--pink),var(--blue)); color:#fff; box-shadow:0 10px 28px rgba(119,119,255,.18); }
     .button-secondary { border-color:#34304d; background:#100e1c; color:#d1d3cc; }
 
-    .hero { padding:90px 0 112px; }
-    .hero-grid { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr); align-items:center; gap:64px; }
+    .hero { position:relative; max-width:none; width:100%; padding:54px max(20px,calc((100% - 1180px)/2)) 90px; background:linear-gradient(180deg,rgba(5,6,14,.72),rgba(5,6,14,.83)),url("assets/home-hero-bg.png") center top/cover no-repeat; }
+    .hero-grid { display:block; max-width:1180px; margin:0 auto; text-align:center; }
     .badge {
       display:inline-flex; align-items:center; min-height:28px; margin-bottom:22px; padding:0 10px;
       border:1px solid rgba(65,232,255,.24); background:rgba(16,14,28,.72); color:#b8dce3;
@@ -69,13 +70,23 @@
     }
     .badge::before { width:6px; height:6px; margin-right:8px; border-radius:50%; background:var(--cyan); box-shadow:0 0 10px rgba(65,232,255,.7); content:""; }
     h1, h2, h3, p { margin-top:0; }
-    h1 { max-width:680px; margin-bottom:0; font-size:clamp(50px,7vw,88px); line-height:.98; letter-spacing:-.055em; }
+    h1 { max-width:920px; margin:0 auto; font-size:clamp(50px,7vw,88px); line-height:.98; letter-spacing:-.055em; }
     h1, .gradient-text { color:transparent; background:linear-gradient(100deg,#fff 15%,#f5d8ee 48%,#9eefff 85%); -webkit-background-clip:text; background-clip:text; }
     h1 .headline-emphasis { color:#fff; }
-    .hero-copy { max-width:650px; margin:28px 0 0; color:var(--soft); font-size:clamp(18px,2vw,21px); line-height:1.6; }
+    .hero-copy { max-width:650px; margin:28px auto 0; color:var(--soft); font-size:clamp(18px,2vw,21px); line-height:1.6; }
     .hero-note { margin:18px 0 0; color:var(--muted); font-size:14px; line-height:1.8; }
-    .hero-actions { display:flex; flex-wrap:wrap; gap:14px; margin-top:34px; }
+    .hero-actions { display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:34px; }
     .hero-actions .button-primary { max-width:290px; }
+    .hero-steps { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:10px; margin-top:54px; text-align:left; }
+    .hero-step { position:relative; min-height:190px; padding:0 12px 16px; border:1px solid rgba(79,73,115,.44); background:rgba(7,8,18,.78); transition:border-color .35s ease,box-shadow .35s ease,transform .35s ease; }
+    .hero-step::before { display:block; height:2px; margin:0 -12px 16px; background:linear-gradient(90deg,var(--pink),var(--blue)); opacity:.28; content:""; }
+    .hero-step.is-active { border-color:var(--cyan); box-shadow:0 0 28px rgba(65,232,255,.22),inset 0 0 30px rgba(65,232,255,.07); transform:translateY(-4px); }
+    .hero-step.is-active::before { opacity:1; box-shadow:0 0 12px rgba(65,232,255,.75); }
+    .hero-step-image { width:100%; height:92px; display:block; object-fit:cover; opacity:.62; filter:saturate(.8) contrast(1.1); }
+    .hero-step.is-active .hero-step-image { opacity:.95; }
+    .hero-step-number { display:block; margin-top:10px; color:var(--cyan); font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:10px; letter-spacing:.12em; }
+    .hero-step h3 { margin:8px 0 0; font-size:14px; }
+    .hero-step p { margin:3px 0 0; color:var(--muted); font-size:12px; }
 
     .placeholder {
       position:relative; overflow:hidden; min-height:220px; border:1px solid #34304d;
@@ -128,7 +139,8 @@
     .footer-links a:hover { color:var(--cyan); }
 
     @media (max-width:980px) {
-      .hero-grid, .problem-grid, .case-study { grid-template-columns:1fr; gap:38px; }
+      .problem-grid, .case-study { grid-template-columns:1fr; gap:38px; }
+      .hero-steps { grid-template-columns:repeat(3,minmax(0,1fr)); }
       .hero-visual .placeholder { min-height:340px; }
       .case-study .placeholder { min-height:300px; border-right:0; border-bottom:1px solid var(--line); }
       .snapshot-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
@@ -139,10 +151,10 @@
       .site-shell { width:min(100% - 24px,1180px); }
       .site-header { align-items:flex-start; flex-wrap:wrap; }
       nav { order:3; width:100%; justify-content:space-between; gap:12px; }
-      .hero { padding:64px 0 78px; }
+      .hero { padding:64px 12px 78px; }
       .hero-visual .placeholder { min-height:260px; }
       .section { padding:70px 0; }
-      .pipeline, .snapshot-grid, .case-meta { grid-template-columns:1fr; }
+      .pipeline, .snapshot-grid, .case-meta, .hero-steps { grid-template-columns:1fr; }
       .hero-actions, .final-actions, .case-actions { flex-direction:column; }
       .button { width:100%; }
       .final-cta { margin-bottom:60px; padding:40px 24px; }
@@ -154,12 +166,12 @@
 <body>
   <header class="site-shell site-header">
     <a class="brand" href="#top" aria-label="ShadyGG Studio home">
-      <img class="brand-mark" src="assets/logo/shadygg-logo.svg" alt="ShadyGG Studio logo">
+      <img class="brand-mark" src="assets/logo/shadyGG-logo.jpg" alt="ShadyGG Studio logo">
       <span class="brand-copy"><strong>ShadyGG Studio</strong><span>Story-driven video production</span></span>
     </a>
     <nav aria-label="Primary navigation">
-      <a href="#how-it-works">How it Works</a>
-      <a href="#examples">Examples</a>
+      <a href="#how-it-works">The Shady Magic</a>
+      <a href="#examples">Real Demo</a>
       <a href="#private-beta">Private Beta</a>
     </nav>
     <a class="button button-primary" href="#private-beta">Apply for Private Beta</a>
@@ -170,12 +182,19 @@
       <div class="hero-grid">
         <div>
           <p class="badge">Experimental Mode &middot; Private Beta</p>
-          <h1>Turn a 3&ndash;6 hour stream<br><span class="headline-emphasis">into one unforgettable story.</span></h1>
-          <p class="hero-copy">ShadyGG analyzes your gameplay, discovers the strongest story hidden inside your stream, and generates a complete editing blueprint in minutes instead of hours.</p>
+          <h1>Turn long streams into<br><span class="headline-emphasis">story-driven videos</span>&mdash;<br>in no time.</h1>
+          <p class="hero-copy">ShadyGG analyzes your gameplay and highlights the <span class="gradient-text">story</span>, <span class="gradient-text">blueprint</span> and <span class="gradient-text">director plan</span>&mdash;so you can start editing where it matters.</p>
           <p class="hero-note"><strong>Not another AI clipping tool.</strong><br><strong>ShadyGG discovers the story before the edit begins.</strong></p>
           <div class="hero-actions"><a class="button button-primary" href="#private-beta">Apply for Private Beta</a><a class="button button-secondary" href="#how-it-works">See how it works</a></div>
         </div>
-        <div class="hero-visual"><div class="placeholder" aria-label="Placeholder for ShadyGG story discovery visual"><span class="placeholder-label">Visual placeholder</span></div></div>
+        <div class="hero-steps" aria-label="ShadyGG workflow">
+          <article class="hero-step is-active"><img class="hero-step-image" src="assets/home/hero-tiles-01.jpg" alt=""><span class="hero-step-number">01</span><h3>LONG STREAM</h3><p>3&ndash;6+ hours</p></article>
+          <article class="hero-step"><img class="hero-step-image" src="assets/home/hero-tiles-01.jpg" alt=""><span class="hero-step-number">02</span><h3>AI ANALYSIS</h3><p>Deep gameplay understanding</p></article>
+          <article class="hero-step"><img class="hero-step-image" src="assets/home/hero-tiles-01.jpg" alt=""><span class="hero-step-number">03</span><h3>STORY RECO</h3><p>Find the stories hidden in your stream</p></article>
+          <article class="hero-step"><img class="hero-step-image" src="assets/home/hero-tiles-01.jpg" alt=""><span class="hero-step-number">04</span><h3>STORY BLUEPRINT</h3><p>Structured edit plan with key moments</p></article>
+          <article class="hero-step"><img class="hero-step-image" src="assets/home/hero-tiles-01.jpg" alt=""><span class="hero-step-number">05</span><h3>DIRECTOR PLAN</h3><p>Smart timeline and scene direction</p></article>
+          <article class="hero-step"><img class="hero-step-image" src="assets/home/hero-tiles-01.jpg" alt=""><span class="hero-step-number">06</span><h3>EXPORT READY</h3><p>Premiere Pro XML export</p></article>
+        </div>
       </div>
     </section>
 
@@ -226,5 +245,14 @@
   </main>
 
   <footer class="site-shell"><span>&copy; 2026 ShadyGG Studio</span><span class="footer-links"><a href="#how-it-works">How it Works</a><a href="#examples">Examples</a><a href="#private-beta">Private Beta</a><a href="#social">Social placeholder</a></span></footer>
+  <script>
+    const heroSteps = document.querySelectorAll('.hero-step');
+    let activeHeroStep = 0;
+    setInterval(() => {
+      heroSteps[activeHeroStep].classList.remove('is-active');
+      activeHeroStep = (activeHeroStep + 1) % heroSteps.length;
+      heroSteps[activeHeroStep].classList.add('is-active');
+    }, 1000);
+  </script>
 </body>
 </html>
