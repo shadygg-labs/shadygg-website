@@ -5,248 +5,75 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="ShadyGG finds the story hidden inside your gaming VOD before the edit begins.">
   <title>ShadyGG Studio - Find the story before the edit</title>
-  <style>
-    :root {
-      --ink:#f4f4ef;
-      --muted:#999a95;
-      --soft:#c2c5bd;
-      --surface:#151714;
-      --surface-2:#1b1e1a;
-      --line:#29263d;
-      --pink:#ff2aa3;
-      --cyan:#41e8ff;
-      --blue:#7777ff;
-      --deep:#0b0c0a;
-    }
-
-    * { box-sizing:border-box; }
-    html { background:var(--deep); scroll-behavior:smooth; }
-    body {
-      margin:0;
-      min-width:320px;
-      color:var(--ink);
-      background:
-        radial-gradient(circle at 82% -8%,rgba(52,188,255,.18),transparent 34rem),
-        radial-gradient(circle at 8% 26%,rgba(255,42,163,.12),transparent 30rem),
-        linear-gradient(145deg,#090811 0%,#0d0b18 48%,#080b16 100%);
-      font-family:Arial,Helvetica,sans-serif;
-      line-height:1.55;
-    }
-
-    a { color:inherit; }
-    .site-shell { width:min(1180px,calc(100% - 40px)); margin:0 auto; }
-    .site-header {
-      display:flex; align-items:center; justify-content:space-between; gap:24px;
-      position:sticky; top:12px; z-index:10; margin-top:0; padding:12px 20px; border:1px solid rgba(79,73,115,.38);
-      border-radius:12px; background:rgba(5,6,14,.72); backdrop-filter:blur(12px);
-    }
-    .brand { display:flex; align-items:center; gap:12px; text-decoration:none; }
-    .brand-mark { width:38px; height:38px; display:block; object-fit:contain; }
-    .brand-copy strong { display:block; font-size:15px; }
-    .brand-copy span, .mono {
-      display:block; margin-top:2px; color:var(--muted);
-      font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
-      font-size:9px; letter-spacing:.14em; text-transform:uppercase;
-    }
-    nav { display:flex; flex-wrap:wrap; gap:42px; margin-left:auto; }
-    nav a { color:#c2c5bd; text-decoration:none; font-size:14px; }
-    nav a:hover, nav a:focus-visible { color:var(--cyan); }
-
-    .button {
-      display:inline-flex; align-items:center; justify-content:center; min-height:48px;
-      padding:0 22px; border:1px solid transparent; text-decoration:none;
-      font-weight:700; font-size:14px; transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
-    }
-    .button:hover, .button:focus-visible { transform:translateY(-2px); }
-    .button-primary { background:linear-gradient(90deg,var(--pink),var(--blue)); color:#fff; box-shadow:0 10px 28px rgba(119,119,255,.18); }
-    .button-secondary { border-color:#34304d; background:#100e1c; color:#d1d3cc; }
-
-    .hero { position:relative; max-width:none; width:100%; padding:54px max(20px,calc((100% - 1180px)/2)) 90px; background:linear-gradient(180deg,rgba(5,6,14,.72),rgba(5,6,14,.83)),url("assets/home-hero-bg.png") center top/cover no-repeat; }
-    .hero-grid { display:block; max-width:1180px; margin:0 auto; text-align:center; }
-    .badge {
-      display:inline-flex; align-items:center; min-height:28px; margin-bottom:22px; padding:0 10px;
-      border:1px solid rgba(65,232,255,.24); background:rgba(16,14,28,.72); color:#b8dce3;
-      font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase;
-    }
-    .badge::before { width:6px; height:6px; margin-right:8px; border-radius:50%; background:var(--cyan); box-shadow:0 0 10px rgba(65,232,255,.7); content:""; }
-    h1, h2, h3, p { margin-top:0; }
-    h1 { max-width:920px; margin:0 auto; font-size:clamp(50px,7vw,88px); line-height:.98; letter-spacing:-.055em; }
-    h1, .gradient-text { color:transparent; background:linear-gradient(100deg,#fff 15%,#f5d8ee 48%,#9eefff 85%); -webkit-background-clip:text; background-clip:text; }
-    h1 .headline-emphasis { color:#fff; }
-    .hero-copy { max-width:650px; margin:28px auto 0; color:var(--soft); font-size:clamp(18px,2vw,21px); line-height:1.6; }
-    .hero-note { margin:18px 0 0; color:var(--muted); font-size:14px; line-height:1.8; }
-    .hero-actions { display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:34px; }
-    .hero-actions .button-primary { max-width:290px; }
-    .hero-steps { display:flex; gap:10px; margin-top:54px; text-align:left; }
-    .hero-step { position:relative; flex:1 1 0; min-width:0; min-height:190px; padding:0 12px 16px; border:1px solid rgba(79,73,115,.44); background:rgba(7,8,18,.78); transition:flex-grow .45s ease,border-color .35s ease,box-shadow .35s ease,transform .35s ease; }
-    .hero-step::before { display:block; height:2px; margin:0 -12px 16px; background:linear-gradient(90deg,var(--pink),var(--blue)); opacity:.28; content:""; }
-    .hero-step.is-active { flex-grow:1.24; border-color:var(--cyan); box-shadow:0 0 28px rgba(65,232,255,.22),inset 0 0 30px rgba(65,232,255,.07); transform:translateY(-4px); }
-    .hero-step.is-active::before { opacity:1; box-shadow:0 0 12px rgba(65,232,255,.75); }
-    .hero-step-image { width:100%; height:92px; display:block; object-fit:cover; opacity:.62; filter:saturate(.8) contrast(1.1); }
-    .hero-step.is-active .hero-step-image { opacity:.95; }
-    .hero-step-number { display:block; margin-top:10px; color:var(--cyan); font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:10px; letter-spacing:.12em; }
-    .hero-step h3 { margin:8px 0 0; font-size:14px; }
-    .hero-step p { margin:3px 0 0; color:var(--muted); font-size:12px; }
-
-    .placeholder {
-      position:relative; overflow:hidden; min-height:220px; border:1px solid #34304d;
-      background:linear-gradient(145deg,rgba(28,25,47,.98),rgba(12,14,28,.98));
-    }
-    .placeholder::before { position:absolute; inset:18%; border:1px dashed rgba(65,232,255,.22); content:""; }
-    .placeholder::after { position:absolute; top:50%; left:50%; width:54px; height:54px; border:1px solid rgba(255,42,163,.45); transform:translate(-50%,-50%) rotate(45deg); content:""; }
-    .placeholder-label { position:absolute; right:14px; bottom:12px; color:#73768b; font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:9px; letter-spacing:.12em; text-transform:uppercase; }
-    .hero-visual .placeholder { min-height:470px; }
-
-    .section { padding:94px 0; }
-    .section-heading { max-width:680px; margin-bottom:42px; }
-    .eyebrow { margin-bottom:16px; color:var(--cyan); font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:10px; letter-spacing:.16em; text-transform:uppercase; }
-    .section-heading h2, .final-cta h2 { margin-bottom:0; font-size:clamp(38px,5vw,64px); line-height:1; letter-spacing:-.05em; }
-    .section-heading p, .final-cta p { margin:18px 0 0; color:var(--soft); font-size:18px; }
-    .problem-grid { display:grid; grid-template-columns:minmax(0,.8fr) minmax(360px,1.2fr); align-items:center; gap:70px; }
-    .problem-copy { max-width:480px; color:var(--soft); font-size:20px; line-height:1.7; }
-    .problem-copy strong { color:var(--ink); font-weight:600; }
-
-    .pipeline { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
-    .pipeline-card { position:relative; padding:18px; border:1px solid var(--line); background:linear-gradient(145deg,rgba(26,22,39,.96),rgba(12,14,28,.98)); }
-    .pipeline-card:not(:last-child)::after { position:absolute; top:50%; right:-18px; color:var(--cyan); content:"\\2192"; font-size:20px; transform:translateY(-50%); z-index:2; }
-    .pipeline-card .placeholder { min-height:150px; margin-bottom:20px; }
-    .pipeline-card h3 { margin-bottom:6px; font-size:19px; }
-    .pipeline-card p { margin:0; color:var(--muted); font-size:14px; }
-    .export-note { margin-top:24px; padding:18px 20px; border-left:2px solid var(--cyan); background:rgba(16,14,28,.62); color:var(--soft); }
-    .export-note strong { color:var(--ink); }
-
-    .case-study { display:grid; grid-template-columns:minmax(300px,.8fr) minmax(0,1.2fr); gap:0; border:1px solid var(--line); background:linear-gradient(145deg,rgba(26,22,39,.96),rgba(12,14,28,.98)); }
-    .case-study .placeholder { min-height:430px; border:0; border-right:1px solid var(--line); }
-    .case-content { padding:34px; }
-    .case-content h3 { margin-bottom:24px; font-size:28px; }
-    .case-meta { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-bottom:28px; }
-    .case-meta span { display:block; color:var(--muted); font-size:12px; }
-    .case-meta strong { display:block; margin-top:4px; font-size:16px; }
-    .case-actions { display:flex; flex-wrap:wrap; gap:12px; }
-
-    .snapshot-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
-    .snapshot-card { min-height:190px; padding:24px; border:1px solid var(--line); background:rgba(16,14,28,.72); }
-    .snapshot-card h3 { margin:34px 0 10px; font-size:20px; }
-    .snapshot-card p { margin:0; color:var(--muted); font-size:15px; }
-    .personal-note { margin:26px 0 0; color:var(--muted); font-size:14px; }
-    .personal-note strong { color:var(--soft); }
-
-    .final-cta { margin:30px auto 90px; padding:70px 54px; border:1px solid rgba(65,232,255,.28); background:radial-gradient(circle at 84% 20%,rgba(65,232,255,.10),transparent 19rem),radial-gradient(circle at 8% 120%,rgba(255,42,163,.10),transparent 18rem),#100e1c; }
-    .final-actions { display:flex; flex-wrap:wrap; gap:14px; margin-top:30px; }
-    footer { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:26px 0 38px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; }
-    .footer-links { display:flex; gap:18px; }
-    .footer-links a { text-decoration:none; }
-    .footer-links a:hover { color:var(--cyan); }
-
-    @media (max-width:980px) {
-      .problem-grid, .case-study { grid-template-columns:1fr; gap:38px; }
-      .hero-steps { flex-wrap:wrap; }
-      .hero-step { flex-basis:calc(33.333% - 7px); }
-      .hero-visual .placeholder { min-height:340px; }
-      .case-study .placeholder { min-height:300px; border-right:0; border-bottom:1px solid var(--line); }
-      .snapshot-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
-      .pipeline { grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
-      .pipeline-card:not(:last-child)::after { display:none; }
-    }
-    @media (max-width:680px) {
-      .site-shell { width:min(100% - 24px,1180px); }
-      .site-header { align-items:flex-start; flex-wrap:wrap; }
-      nav { order:3; width:100%; justify-content:space-between; gap:12px; }
-      .hero { padding:64px 12px 78px; }
-      .hero-visual .placeholder { min-height:260px; }
-      .section { padding:70px 0; }
-      .pipeline, .snapshot-grid, .case-meta { grid-template-columns:1fr; }
-      .hero-steps { display:grid; grid-template-columns:1fr; }
-      .hero-step { flex-basis:auto; }
-      .hero-actions, .final-actions, .case-actions { flex-direction:column; }
-      .button { width:100%; }
-      .final-cta { margin-bottom:60px; padding:40px 24px; }
-      footer { align-items:flex-start; flex-direction:column; }
-    }
-    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important; } }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main id="top">
     <section class="hero">
-      <header class="site-shell site-header">
-        <a class="brand" href="#top" aria-label="ShadyGG Studio home">
-          <img class="brand-mark" src="assets/logo/shadyGG-logo.jpg" alt="ShadyGG Studio logo">
-          <span class="brand-copy"><strong>ShadyGG Studio</strong><span>Story-driven video production</span></span>
-        </a>
-        <nav aria-label="Primary navigation">
-          <a href="#how-it-works">The Shady Magic</a>
-          <a href="#examples">Real Demo</a>
-          <a href="#private-beta">Private Beta</a>
-        </nav>
-        <a class="button button-primary" href="#private-beta">Apply for Private Beta</a>
-      </header>
+      <div data-component="header"></div>
       <div class="hero-grid">
         <div>
           <p class="badge">Experimental Mode &middot; Private Beta</p>
-          <h1>Turn long streams into<br><span class="headline-emphasis">story-driven videos</span>&mdash;<br>in no time.</h1>
-          <p class="hero-copy">ShadyGG analyzes your gameplay and highlights the <span class="gradient-text">story</span>, <span class="gradient-text">blueprint</span> and <span class="gradient-text">director plan</span>&mdash;so you can start editing where it matters.</p>
-          <p class="hero-note"><strong>Not another AI clipping tool.</strong><br><strong>ShadyGG discovers the story before the edit begins.</strong></p>
+          <h1>Turn long streams into<br><span class="headline-emphasis">story-driven videos</span></h1>
+          <p class="hero-copy"><strong>Spend less time reviewing. More time creating.</strong> Viewer-first, retention-driven video production.</p>
           <div class="hero-actions"><a class="button button-primary" href="#private-beta">Apply for Private Beta</a><a class="button button-secondary" href="#how-it-works">See how it works</a></div>
+          <div class="hero-steps" aria-label="ShadyGG workflow">
+            <article class="hero-step is-active"><div class="pipeline-preview preview-video"><img src="assets/home/hero-tiles-01.jpg" alt="Cinematic raw gameplay preview"></div><span class="hero-step-number">01</span><h3>LONG STREAM</h3><p>Original, unprocessed VOD.</p></article>
+            <article class="hero-step"><div class="pipeline-preview preview-analysis"><span></span><span></span><span></span><i></i></div><span class="hero-step-number">02</span><h3>DEEP ANALYSIS</h3><p>Events, speakers and session structure.</p></article>
+            <article class="hero-step"><div class="pipeline-preview preview-reco"><b>STORY IDEAS</b><span>Clutch comeback <em>94</em></span><span>Rival encounter <em>87</em></span><span>Final push <em>81</em></span></div><span class="hero-step-number">03</span><h3>STORY IDEAS</h3><p>Multiple directions discovered.</p></article>
+            <article class="hero-step"><div class="pipeline-preview preview-blueprint"><b>STORY BLUEPRINT</b><span>HOOK ----------------</span><span>GOAL ----------------</span><span>OBSTACLE ------------</span><span>TURNING POINT -------</span><span>PAYOFF --------------</span></div><span class="hero-step-number">04</span><h3>STORY BLUEPRINT</h3><p>Structures the chosen narrative.</p></article>
+            <article class="hero-step"><div class="pipeline-preview preview-director"><span>SCENE 01</span><span>BUILD</span><span>PAYOFF</span><i></i></div><span class="hero-step-number">05</span><h3>DIRECTOR PLAN</h3><p>Scenes, pacing and edit decisions.</p></article>
+            <article class="hero-step"><div class="pipeline-preview preview-xml"><img src="assets/home/hero-tiles-01.jpg" alt="Pre-cut gameplay timeline preview"><b>&lt;precut_sequence&gt;</b><span>&nbsp;&nbsp;&lt;clipitem id=&quot;001&quot;&gt;</span><span>&nbsp;&nbsp;&lt;timeline&gt;VOD.xml</span><span>&lt;/precut_sequence&gt;</span></div><span class="hero-step-number">06</span><h3>PRE-CUT VIDEO READY</h3><p>Edited source arranged for review.</p></article>
+          </div>
         </div>
-        <div class="hero-steps" aria-label="ShadyGG workflow">
-          <article class="hero-step is-active"><img class="hero-step-image" src="assets/home/hero-tiles-01.jpg" alt=""><span class="hero-step-number">01</span><h3>LONG STREAM</h3><p>3&ndash;6+ hours</p></article>
-          <article class="hero-step"><img class="hero-step-image" src="assets/home/hero-tiles-01.jpg" alt=""><span class="hero-step-number">02</span><h3>AI ANALYSIS</h3><p>Deep gameplay understanding</p></article>
-          <article class="hero-step"><img class="hero-step-image" src="assets/home/hero-tiles-01.jpg" alt=""><span class="hero-step-number">03</span><h3>STORY RECO</h3><p>Find the stories hidden in your stream</p></article>
-          <article class="hero-step"><img class="hero-step-image" src="assets/home/hero-tiles-01.jpg" alt=""><span class="hero-step-number">04</span><h3>STORY BLUEPRINT</h3><p>Structured edit plan with key moments</p></article>
-          <article class="hero-step"><img class="hero-step-image" src="assets/home/hero-tiles-01.jpg" alt=""><span class="hero-step-number">05</span><h3>DIRECTOR PLAN</h3><p>Smart timeline and scene direction</p></article>
-          <article class="hero-step"><img class="hero-step-image" src="assets/home/hero-tiles-01.jpg" alt=""><span class="hero-step-number">06</span><h3>EXPORT READY</h3><p>Premiere Pro XML export</p></article>
+      </div>
+    </section>
+
+    <section class="relief-section" id="pain-and-relief">
+      <div class="site-shell">
+        <div class="relief-heading">
+          <p class="eyebrow">THE PAIN AND RELIEF</p>
+          <h2>Stop wasting hours.<br>Focus on what makes your video yours.</h2>
+          <p>Editing starts long before the first cut. ShadyGG handles the repetitive, time-consuming preparation so you can focus on creativity, not chaos.</p>
+        </div>
+        <div class="relief-grid">
+          <article class="relief-card old-way">
+            <div class="relief-card-heading"><span class="relief-kicker">THE OLD WAY</span><h3>Hours of repetitive preparation.</h3></div>
+            <ul class="pain-list">
+              <li><span class="pain-icon icon-footage"></span><span><b>Overwhelming footage</b><small>Rewatch the entire stream.</small></span></li>
+              <li><span class="pain-icon icon-search"></span><span><b>Endless searching</b><small>Scrub, rewind and hunt for moments.</small></span></li>
+              <li><span class="pain-icon icon-notes"></span><span><b>Manual planning</b><small>Write notes and timestamps.</small></span></li>
+              <li><span class="pain-icon icon-fatigue"></span><span><b>Mental fatigue</b><small>Decide what the story even is.</small></span></li>
+              <li><span class="pain-icon icon-direction"></span><span><b>No clear direction</b><small>Reach the editor without a real plan.</small></span></li>
+            </ul>
+            <div class="pain-callout"><strong>Creative flow stops before it starts.</strong><span>Time lost. Energy drained. Momentum gone.</span></div>
+          </article>
+
+          <article class="relief-card shady-way">
+            <div class="relief-card-heading"><span class="relief-kicker">THE SHADYGG WAY</span><h3>We handle the heavy lifting.</h3></div>
+            <div class="engine-row">
+              <div class="engine-ring" role="img" aria-label="80 percent of preparation done for you"><div><strong>80%</strong><span>OF THE PREPARATION<br>DONE FOR YOU</span></div></div>
+              <div class="outcomes" aria-label="Preparation outcomes"><span><i class="outcome-check"></i>Analyzed</span><span><i class="outcome-spark"></i>Story found</span><span><i class="outcome-stack"></i>Structured</span><span><i class="outcome-plan"></i>Planned</span></div>
+            </div>
+            <div class="comparison-panel" aria-label="Raw stream to ShadyGG pre-cut comparison">
+              <div class="comparison-side raw-side"><img src="assets/home/hero-tiles-01.jpg" alt="Raw gameplay stream placeholder"><span>RAW STREAM</span></div>
+              <div class="comparison-divider" aria-hidden="true"></div>
+              <div class="comparison-side precut-side"><div class="precut-screen"><span></span><span></span><span></span><i></i></div><span>SHADYGG PRE-CUT</span></div>
+            </div>
+            <div class="relief-callout"><h4>You focus on the 20%.</h4><p>Make it yours. Add your style. Publish with confidence.</p></div>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="site-shell section" id="problem">
-      <div class="problem-grid">
-        <div>
-          <p class="eyebrow">The problem</p>
-          <h2>Editing starts<br>long before editing.</h2>
-          <div class="problem-copy"><p>Before you even place your first cut...</p><p>you've already spent hours<br>watching your own stream,<br>rewinding,<br>looking for good moments,<br>trying to remember where everything happened.</p><p>By the time you're ready to edit...<br>you're already exhausted.</p><p><strong>ShadyGG removes the hardest part:<br>finding the story.</strong></p></div>
-        </div>
-        <div class="placeholder" aria-label="Placeholder for the editing problem visual"><span class="placeholder-label">Visual placeholder</span></div>
-      </div>
-    </section>
-
-    <section class="site-shell section" id="how-it-works">
-      <div class="section-heading"><p class="eyebrow">The solution</p><h2>From raw VOD<br>to editable draft.</h2></div>
-      <div class="pipeline">
-        <article class="pipeline-card"><div class="placeholder"><span class="placeholder-label">Input</span></div><h3>3&ndash;6 hour VOD</h3><p>Your original gameplay stream.</p></article>
-        <article class="pipeline-card"><div class="placeholder"><span class="placeholder-label">Discovery</span></div><h3>Story Suggestions</h3><p>Multiple AI-generated story directions.</p></article>
-        <article class="pipeline-card"><div class="placeholder"><span class="placeholder-label">Blueprint</span></div><h3>Story Blueprint</h3><p>A complete storytelling plan with pacing and structure.</p></article>
-        <article class="pipeline-card"><div class="placeholder"><span class="placeholder-label">Draft cut</span></div><h3>Editable Draft Cut</h3><p>Premiere XML generated from the Director plan. Designed for professional editing workflows.</p></article>
-      </div>
-      <p class="export-note"><span class="mono">Current export target</span><strong>Adobe Premiere Pro</strong><br>Additional editor support is under active development.</p>
-    </section>
-
-    <section class="site-shell section" id="examples">
-      <div class="section-heading"><p class="eyebrow">Real example</p><h2>The first creator story built with ShadyGG.</h2><p>Follow a complete creator journey from a raw stream to an AI-generated editing plan.</p></div>
-      <article class="case-study">
-        <div class="placeholder" aria-label="Placeholder for creator case study visual"><span class="placeholder-label">Case study placeholder</span></div>
-        <div class="case-content"><p class="eyebrow">Private beta case study</p><h3>One stream. One story. A draft ready to shape.</h3><div class="case-meta"><div><span>Creator</span><strong>Creator story placeholder</strong></div><div><span>Game</span><strong>Game placeholder</strong></div><div><span>Stream length</span><strong>3&ndash;6 hours</strong></div><div><span>Story selected</span><strong>Story direction placeholder</strong></div><div><span>Blueprint</span><strong>Generated</strong></div><div><span>Director</span><strong>Generated</strong></div><div><span>Final XML</span><strong>Premiere-ready</strong></div></div><div class="case-actions"><a class="button button-secondary" href="#placeholder-blueprint">View Story Blueprint</a><a class="button button-secondary" href="#placeholder-director">View Director Plan</a></div></div>
-      </article>
-    </section>
-
-    <section class="site-shell section" id="private-beta">
-      <div class="section-heading"><p class="eyebrow">ShadyGG snapshot</p><h2>Where ShadyGG stands today.</h2></div>
-      <div class="snapshot-grid">
-        <article class="snapshot-card"><span class="mono">01</span><h3>Private Beta</h3><p>Currently accepting a limited number of creators.</p></article>
-        <article class="snapshot-card"><span class="mono">02</span><h3>Experimental</h3><p>Rapidly evolving every week.</p></article>
-        <article class="snapshot-card"><span class="mono">03</span><h3>Current Export</h3><p>Adobe Premiere Pro.<br>Additional editors coming later.</p></article>
-        <article class="snapshot-card"><span class="mono">04</span><h3>Creator-first</h3><p>Every workflow is refined using real creator feedback.</p></article>
-      </div>
-      <p class="personal-note"><strong>I personally review every submission.</strong><br>I can't promise every project will be accepted, but every application will be read.</p>
-    </section>
-
-    <section class="site-shell final-cta" id="contact">
-      <p class="eyebrow">Your next story</p><h2>Ready to let AI find<br>your next story?</h2><p>Apply for the Private Beta and help shape the future of AI-assisted storytelling for creators.</p><div class="final-actions"><a class="button button-primary" href="#private-beta">Apply for Private Beta</a><a class="button button-secondary" href="#contact">Contact Me</a></div>
-    </section>
+    <section class="site-shell section" id="problem"><div class="problem-grid"><div><p class="eyebrow">The problem</p><h2>Editing starts<br>long before editing.</h2><div class="problem-copy"><p>Before you even place your first cut...</p><p>you've already spent hours<br>watching your own stream,<br>rewinding,<br>looking for good moments,<br>trying to remember where everything happened.</p><p>By the time you're ready to edit...<br>you're already exhausted.</p><p><strong>ShadyGG removes the hardest part:<br>finding the story.</strong></p></div></div><div class="placeholder" aria-label="Placeholder for the editing problem visual"><span class="placeholder-label">Visual placeholder</span></div></div></section>
+    <section class="site-shell section" id="how-it-works"><div class="section-heading"><p class="eyebrow">The solution</p><h2>From raw VOD<br>to editable draft.</h2></div><div class="pipeline"><article class="pipeline-card"><div class="placeholder"><span class="placeholder-label">Input</span></div><h3>3&ndash;6 hour VOD</h3><p>Your original gameplay stream.</p></article><article class="pipeline-card"><div class="placeholder"><span class="placeholder-label">Discovery</span></div><h3>Story Suggestions</h3><p>Multiple AI-generated story directions.</p></article><article class="pipeline-card"><div class="placeholder"><span class="placeholder-label">Blueprint</span></div><h3>Story Blueprint</h3><p>A complete storytelling plan with pacing and structure.</p></article><article class="pipeline-card"><div class="placeholder"><span class="placeholder-label">Draft cut</span></div><h3>Editable Draft Cut</h3><p>Premiere XML generated from the Director plan. Designed for professional editing workflows.</p></article></div><p class="export-note"><span class="mono">Current export target</span><strong>Adobe Premiere Pro</strong><br>Additional editor support is under active development.</p></section>
+    <section class="site-shell section" id="examples"><div class="section-heading"><p class="eyebrow">Real example</p><h2>The first creator story built with ShadyGG.</h2><p>Follow a complete creator journey from a raw stream to an AI-generated editing plan.</p></div><article class="case-study"><div class="placeholder" aria-label="Placeholder for creator case study visual"><span class="placeholder-label">Case study placeholder</span></div><div class="case-content"><p class="eyebrow">Private beta case study</p><h3>One stream. One story. A draft ready to shape.</h3><div class="case-meta"><div><span>Creator</span><strong>Creator story placeholder</strong></div><div><span>Game</span><strong>Game placeholder</strong></div><div><span>Stream length</span><strong>3&ndash;6 hours</strong></div><div><span>Story selected</span><strong>Story direction placeholder</strong></div><div><span>Blueprint</span><strong>Generated</strong></div><div><span>Director</span><strong>Generated</strong></div><div><span>Final XML</span><strong>Premiere-ready</strong></div></div><div class="case-actions"><a class="button button-secondary" href="#placeholder-blueprint">View Story Blueprint</a><a class="button button-secondary" href="#placeholder-director">View Director Plan</a></div></div></article></section>
+    <section class="site-shell section" id="private-beta"><div class="section-heading"><p class="eyebrow">ShadyGG snapshot</p><h2>Where ShadyGG stands today.</h2></div><div class="snapshot-grid"><article class="snapshot-card"><span class="mono">01</span><h3>Private Beta</h3><p>Currently accepting a limited number of creators.</p></article><article class="snapshot-card"><span class="mono">02</span><h3>Experimental</h3><p>Rapidly evolving every week.</p></article><article class="snapshot-card"><span class="mono">03</span><h3>Current Export</h3><p>Adobe Premiere Pro.<br>Additional editors coming later.</p></article><article class="snapshot-card"><span class="mono">04</span><h3>Creator-first</h3><p>Every workflow is refined using real creator feedback.</p></article></div><p class="personal-note"><strong>I personally review every submission.</strong><br>I can't promise every project will be accepted, but every application will be read.</p></section>
+    <section class="site-shell final-cta" id="contact"><p class="eyebrow">Your next story</p><h2>Ready to let AI find<br>your next story?</h2><p>Apply for the Private Beta and help shape the future of AI-assisted storytelling for creators.</p><div class="final-actions"><a class="button button-primary" href="#private-beta">Apply for Private Beta</a><a class="button button-secondary" href="#contact">Contact Me</a></div></section>
   </main>
-
-  <footer class="site-shell"><span>&copy; 2026 ShadyGG Studio</span><span class="footer-links"><a href="#how-it-works">How it Works</a><a href="#examples">Examples</a><a href="#private-beta">Private Beta</a><a href="#social">Social placeholder</a></span></footer>
+  <div data-component="footer"></div>
+  <script src="components/loader.js"></script>
   <script>
     const heroSteps = document.querySelectorAll('.hero-step');
     let activeHeroStep = 0;
