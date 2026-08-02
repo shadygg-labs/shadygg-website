@@ -1,0 +1,28 @@
+# Private working files
+/private/
+
+# Local tooling and generated output
+/node_modules/
+/dist/
+/build/
+/.cache/
+/.tmp/
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local logs
+*.log
