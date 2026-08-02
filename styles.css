@@ -1084,7 +1084,7 @@ h1 .headline-emphasis {
 }
 
 /* Pain and relief section. */
-.relief-section {
+.full-bleed-section {
   padding: 96px 0;
   background: radial-gradient(circle at 72% 36%, rgba(89, 54, 170, .16), transparent 34rem), radial-gradient(circle at 12% 76%, rgba(46, 56, 128, .12), transparent 30rem), #070a16
 }
@@ -1551,7 +1551,7 @@ h1 .headline-emphasis {
 }
 
 @media(max-width:620px) {
-  .relief-section {
+  .full-bleed-section {
     padding: 72px 0
   }
 
@@ -2593,7 +2593,7 @@ footer {
 }
 
 .eyebrow,
-.relief-section .eyebrow {
+.full-bleed-section .eyebrow {
   font-size: 18px;
   font-weight: 400;
   letter-spacing: .16em;
@@ -2620,7 +2620,7 @@ footer {
   z-index: 1001
 }
 
-.relief-section,
+.full-bleed-section,
 .magic-section,
 .site-shell.section {
   position: relative;
@@ -3058,7 +3058,7 @@ footer {
 }
 
 .eyebrow,
-.relief-section .eyebrow,
+.full-bleed-section .eyebrow,
 .section-heading .eyebrow {
   color: #ffd34d
 }
@@ -3536,7 +3536,7 @@ footer {
 .founder-heading .founder-intro strong{color:#f2edf5}
 .founder-block small{display:none}
 @media(max-width:900px){
-  .section,.full-bleed-section,.relief-section{padding-top:56px;padding-bottom:56px}
+  .section,.full-bleed-section,.full-bleed-section{padding-top:56px;padding-bottom:56px}
   .eyebrow{margin-top:0!important}
   .real-demo-section .case-content>h3:first-child{margin-top:-8px}
   .site-header .mobile-menu-panel .mobile-menu-cta{order:2;background:linear-gradient(105deg,#ffd34d 0%,#f3b54a 42%,var(--cyan) 100%);color:#07101b;box-shadow:0 10px 28px rgba(65,232,255,.2),0 0 18px rgba(255,211,77,.16)}
