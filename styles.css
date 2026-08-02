@@ -104,6 +104,10 @@ h1 .headline-emphasis{color:var(--ink);background:none;-webkit-background-clip:b
 .comparison-panel-wide .comparison-side>span,.comparison-panel-wide .comparison-side>b{top:10px;bottom:auto}
 .comparison-panel-wide .comparison-side>b{top:46px;font-size:11px}
 .comparison-panel-wide .precut-side>span,.comparison-panel-wide .precut-side>b{left:auto;right:10px;text-align:right}
+.comparison-panel-wide .comparison-side>span{top:auto;bottom:31px;left:10px}
+.comparison-panel-wide .comparison-side>b{top:auto;bottom:12px;left:10px;right:auto}
+.comparison-panel-wide .precut-side>span,.comparison-panel-wide .precut-side>b{left:auto;right:10px;text-align:right}
+.comparison-panel-wide .comparison-side>span,.comparison-panel-wide .comparison-side>b{background:rgba(0,0,0,.88)}
 .menu-toggle{display:none}
 .mobile-menu-cta{display:none}
 .mobile-menu-panel{display:none}
@@ -192,4 +196,7 @@ h1,h2,h3,h4{font-family:var(--font-heading)}
 .eyebrow,.relief-section .eyebrow{font-size:18px;font-weight:400;letter-spacing:.16em;line-height:1.4;color:var(--cyan)}
 .section-heading .eyebrow{color:var(--cyan);font-size:18px}
 .comparison-panel-wide .precut-side video{opacity:1;filter:none}
+.site-header{z-index:1000}
+.hero{position:relative;z-index:1001}
+.relief-section,.magic-section,.site-shell.section{position:relative;z-index:1}
 .hero{background-image:linear-gradient(180deg,rgba(5,6,14,.52),rgba(5,6,14,.58)),url("assets/home-hero-bg-generated.jpg")}
