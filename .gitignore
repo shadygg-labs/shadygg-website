@@ -1,5 +1,5 @@
 # Private working files
-/private/
+private/
 
 # Local tooling and generated output
 /node_modules/
