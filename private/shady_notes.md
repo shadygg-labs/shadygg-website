@@ -1,6 +1,8 @@
 Start localhost:
 py -m http.server 8000
 
+----
+
 Amit még szerintem érdemes megcsinálni (prioritási sorrendben)
 High priority
 ✅ Tegyél be egy külön blokkot a Game Profiles / AI learns games témáról.
